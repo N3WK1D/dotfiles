@@ -1,0 +1,4 @@
+{{- $hosttype := promptStringOnce . "hosttype" "Host type" -}}
+
+[data]
+    hosttype = {{ $hosttype | quote }}
