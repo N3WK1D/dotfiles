@@ -9,6 +9,7 @@ umask 027
 export HISTFILESIZE=0
 export HISTCONTROL="ignoreboth"
 
+{{ if eq .hosttype "dev" -}}
 # Set PATH variable
 export PATH="${PATH}:${HOME}/.local/bin"
 
@@ -38,6 +39,11 @@ if shopt -q login_shell; then
 else
     exit 1 # Somehow this is a non-bash or non-login shell
 fi
+
+{{- else if eq .hosttype "srv" -}}
+# Set EDITOR variable
+export EDITOR="${EDITOR:-vi}"
+{{- end }}
 
 # Source ~/.bashrc if found
 [[ -f ~/.bashrc ]] && source ~/.bashrc

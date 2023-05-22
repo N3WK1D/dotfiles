@@ -2,7 +2,6 @@
 # ~/.bashrc
 #
 
-
 # Enable dynamic line wrap
 shopt -s checkwinsize
 
@@ -15,11 +14,11 @@ alias ..='cd ..'
 alias ...='cd ..; cd ..'
 alias ....='cd ..; cd ..; cd ..'
 alias g='cd'
+alias r='cd "$OLDPWD"'
 alias l='ls --color=auto'
 alias ll='ls -lh --color=auto'
 alias lll='ls -lAh --color=auto'
 alias q='exit'
-alias r='cd "$OLDPWD"'
 
 # Frequently Used
 
@@ -29,10 +28,17 @@ alias e='"$EDITOR"'
 ####################
 # Host-specific Info
 
-# Desktop/development devices
-{{- if eq .hosttype "dev" }}
-#
-# Get status of git repo
+{{ if eq .hosttype "dev" -}}
+# Git-specific Aliases
+
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gb='git branch'
+alias gch='git checkout'
+alias gpl='git pull'
+alias gps='git push'
+
 parse_git_status() {
 status="$(git status 2>&1 | tee)"
 dirty="$(echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?")"
@@ -54,29 +60,21 @@ else
     echo -n ""
 fi
 }
-#
-# Get current git branch
 parse_git_branch() {
 BRANCH="$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')"
-[[ -n "${BRANCH}" ]] && { STAT="$(parse_git_status)"; echo -ne "-[\e[33m${BRANCH}${STAT}\e[m]"; } || echo -n ""
+if [[ -n "${BRANCH}" ]]; then
+    STAT="$(parse_git_status)"
+    echo -ne "-[\e[33m${BRANCH}${STAT}\e[m]"
+else
+    echo -n ""
+fi
 }
-#
-# Set Prompt
+
+# Command Prompt
 export PS1="[\[\e[36m\]\t\[\e[m\]]-[\[\e[32m\]\u\[\e[m\]\[\e[32m\]@\[\e[m\]\[\e[32m\]\h\[\e[m\]]-[\[\e[35m\]\W\[\e[m\]]\$(parse_git_branch)\n\\$> "
-#
-# Git Aliases
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gb='git branch'
-alias gch='git checkout'
-alias gpl='git pull'
-alias gps='git push'
-#
-# Server/admin devices
-{{- else if eq .hosttype "svr" }}
-#
-# Set command prompt
+
+{{- else if eq .hosttype "srv" -}}
+# Command Prompt
 export PS1="[\[\e[36m\]\t\[\e[m\]]-[\[\e[32m\]\u\[\e[m\]\[\e[32m\]@\[\e[m\]\[\e[32m\]\h\[\e[m\]]-[\[\e[35m\]\W\[\e[m\]]\n\\$> "
-#
+
 {{- end }}
