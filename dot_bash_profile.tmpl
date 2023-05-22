@@ -7,7 +7,7 @@ umask 027
 
 # Set bash options
 export HISTFILESIZE=0
-export HISTCONTROL="ignoreboth"
+export HISTCONTROL=ignoreboth:erasedups
 
 {{ if eq .hosttype "dev" -}}
 # Set PATH variable
