@@ -5,8 +5,6 @@
 --]]
 
 -- Install package manager
---    https://github.com/folke/lazy.nvim
---    `:help lazy.nvim.txt` for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -20,11 +18,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
 require('lazy').setup({
   'ap/vim-css-color',
   { -- Leap
@@ -56,7 +49,7 @@ require('lazy').setup({
     'nvim-lualine/lualine.nvim',
     opts = {
       options = {
-        icons_enabled = true,
+        icons_enabled = false,
         theme = 'catppuccin',
         component_separators = '|',
         section_separators = '',
@@ -68,17 +61,10 @@ require('lazy').setup({
             'filename',
             file_status = true,
             newfile_status = true,
-            path = 0,
-            symbols = {
-              modified = '[+]',
-              readonly = '[-]',
-              unnamed = '[No Name]',
-              newfile = '[New]',
-            }
           }
         },
         lualine_c = {},
-        lualine_x = {'filetype'},
+        lualine_x = {},
         lualine_y = {'progress'},
         lualine_z = {'location'}
       },
