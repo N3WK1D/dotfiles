@@ -3,7 +3,7 @@
 #
 
 {{ if eq .hosttype "dev" -}}
-if [[ ! -z "${SSH_AUTH_SOCK}" ]]; then
+if [[ -n "${SSH_AUTH_SOCK}" ]]; then
     killall ssh-agent
 fi
 {{- end }}
