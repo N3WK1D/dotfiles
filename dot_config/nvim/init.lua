@@ -34,6 +34,9 @@ require('lazy').setup({
       require("catppuccin").setup {
         flavour = 'mocha',
         term_colors = true,
+        styles = {
+          conditionals = {},
+        },
         color_overrides = {
           mocha = {
             base = '#000000',
@@ -60,12 +63,11 @@ require('lazy').setup({
           {
             'filename',
             file_status = true,
-            newfile_status = true,
           }
         },
         lualine_c = {},
         lualine_x = {},
-        lualine_y = {'progress'},
+        lualine_y = {},
         lualine_z = {'location'}
       },
     },
